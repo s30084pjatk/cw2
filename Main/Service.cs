@@ -25,5 +25,23 @@ public class RentalService
     public void PokazDostepnySprzet()
     {
     }
+    
+    public void PokazSprzetWypozyczony()
+    {
+    }
+    
+    public void PokazAktywneWypozyczenia()
+    {
+    }
+    
+    public void PokazPrzeterminowaneWypozyczenia()
+    {
+    }
+    
+    public void GenerujRaport()
+    {
+    }
+    
+  
 }
 
