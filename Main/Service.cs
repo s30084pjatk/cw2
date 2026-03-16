@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp1;
 
-public class RentalService
+public class Service
 {
     public List<Device> Devices = new();
     public List<Person> Users = new();
@@ -8,15 +8,18 @@ public class RentalService
 
     public void DodajSprzet(Device device)
     {
+        Devices.Add(device);
     }
     
 
     public void DodajUzytkownika(Person person)
     {
+        Users.Add(person);
     }
 
     public void Wypozycz(Device device, Person person)
     {
+        
     }
 
     public void Zwroc(Device device)
