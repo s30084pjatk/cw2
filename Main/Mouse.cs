@@ -7,7 +7,7 @@ public class Mouse : Device
         Bezprzewodowa = bezprzewodowa;
         DPI = dpi;
     }
-
+    
     public bool Bezprzewodowa { get; set; }
     public int DPI { get; set; }
 }

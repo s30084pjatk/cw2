@@ -7,7 +7,7 @@ public class Projector : Device
         Jasnosc = jasnosc;
         Rozdzielczosc = rozdzielczosc;
     }
-
+    
     public int Jasnosc { get; set; }
     public string Rozdzielczosc { get; set; }
 }

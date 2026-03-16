@@ -2,7 +2,5 @@
 
 public enum EnumPracownikPoziomDostepu
 {
-    Poziom_Czerwony,
-    Poziom_Zielony,
-    Poziom_Niebieski
+    Poziom_Czerwony, Poziom_Zielony, Poziom_Niebieski
 }

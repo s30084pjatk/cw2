@@ -7,7 +7,7 @@ public class Laptop : Device
         RamGB = ramGb;
         CPU = cpu;
     }
-
+    
     public int RamGB { get; set; }
     public string CPU { get; set; }
 }

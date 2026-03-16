@@ -9,6 +9,7 @@ public abstract class Person
         this.nazwisko = nazwisko;
         EnumTyp = enumTyp;
     }
+    
 
     public int idPerson { get; set; }
     public string imie { get; set; }

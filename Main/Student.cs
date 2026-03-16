@@ -6,6 +6,6 @@ public class Student : Person
     {
         NrStudenta = nrStudenta;
     }
-
+    
     public string NrStudenta { get; set; }
 }

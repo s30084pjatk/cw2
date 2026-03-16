@@ -9,6 +9,7 @@ public class RentalService
     public void DodajSprzet(Device device)
     {
     }
+    
 
     public void DodajUzytkownika(Person person)
     {
