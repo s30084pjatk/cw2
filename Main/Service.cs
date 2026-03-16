@@ -28,7 +28,7 @@ public class Service
             else if (zutylizowany is Mouse mouse)
                 Console.WriteLine($"Zutylizowana mysz: ID:{mouse.Id}, NAZWA: {mouse.Nazwa}, DPI: {mouse.DPI}");
             else if (zutylizowany is Projector projector)
-                Console.WriteLine($"Zutylizowany projektor: ID:{projector.Id} NAZWA: {projector.Nazwa}, JASNOŚĆ: {projector.Jasnosc} lumenów");
+                Console.WriteLine($"Zutylizowany projektor: ID:{projector.Id}, NAZWA: {projector.Nazwa}, JASNOŚĆ: {projector.Jasnosc} lumenów");
         }
     }
 
@@ -51,11 +51,11 @@ public class Service
         foreach (Device x in Devices)
         {
             if (x is Laptop laptop)
-                Console.WriteLine($"Laptop: {laptop.Nazwa}, RAM: {laptop.RamGB}");
+                Console.WriteLine($"Laptop: ID: {laptop.Id}, NAZWA: {laptop.Nazwa}, RAM: {laptop.RamGB}");
             else if (x is Mouse mouse)
-                Console.WriteLine($"Mysz: {mouse.Nazwa}, DPI: {mouse.DPI}");
+                Console.WriteLine($"Mysz: ID:{mouse.Id}, NAZWA: {mouse.Nazwa}, DPI: {mouse.DPI}");
             else if (x is Projector projector)
-                Console.WriteLine($"Projektor: {projector.Nazwa}, {projector.Jasnosc} lumenów");
+                Console.WriteLine($"Projektor: ID: {projector.Id}, NAZWA: {projector.Nazwa}, {projector.Jasnosc} lumenów");
         }
     }
 

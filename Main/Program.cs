@@ -23,16 +23,16 @@
         Service.DodajUzytkownika(r9);
         Service.DodajUzytkownika(r10);
         
-        Person s1 = new Student(GeneratorAjdikow.LastPersonId(), "Jan", "Kowalski", EnumTypWypozyczajacego.Student, "s12345");
-        Person s2 = new Student(GeneratorAjdikow.LastPersonId(), "Anna", "Nowak", EnumTypWypozyczajacego.Student, "s12346");
-        Person s3 = new Student(GeneratorAjdikow.LastPersonId(), "Piotr", "Wiśniewski", EnumTypWypozyczajacego.Student, "s12347");
-        Person s4 = new Student(GeneratorAjdikow.LastPersonId(), "Maria", "Wójcik", EnumTypWypozyczajacego.Student, "s12348");
-        Person s5 = new Student(GeneratorAjdikow.LastPersonId(), "Tomasz", "Kowalczyk", EnumTypWypozyczajacego.Student, "s12349");
-        Person s6 = new Student(GeneratorAjdikow.LastPersonId(), "Katarzyna", "Kamińska", EnumTypWypozyczajacego.Student, "s12350");
-        Person s7 = new Student(GeneratorAjdikow.LastPersonId(), "Michał", "Lewandowski", EnumTypWypozyczajacego.Student, "s12351");
-        Person s8 = new Student(GeneratorAjdikow.LastPersonId(), "Agnieszka", "Zielińska", EnumTypWypozyczajacego.Student, "s12352");
-        Person s9 = new Student(GeneratorAjdikow.LastPersonId(), "Krzysztof", "Szymański", EnumTypWypozyczajacego.Student, "s12353");
-        Person s10 = new Student(GeneratorAjdikow.LastPersonId(), "Małgorzata", "Woźniak", EnumTypWypozyczajacego.Student, "s12354");
+        Person s1 = new Student(GeneratorAjdikow.LastPersonId(), "Jan", "Kowalski", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s2 = new Student(GeneratorAjdikow.LastPersonId(), "Anna", "Nowak", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s3 = new Student(GeneratorAjdikow.LastPersonId(), "Piotr", "Wiśniewski", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s4 = new Student(GeneratorAjdikow.LastPersonId(), "Maria", "Wójcik", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s5 = new Student(GeneratorAjdikow.LastPersonId(), "Tomasz", "Kowalczyk", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s6 = new Student(GeneratorAjdikow.LastPersonId(), "Katarzyna", "Kamińska", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s7 = new Student(GeneratorAjdikow.LastPersonId(), "Michał", "Lewandowski", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s8 = new Student(GeneratorAjdikow.LastPersonId(), "Agnieszka", "Zielińska", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s9 = new Student(GeneratorAjdikow.LastPersonId(), "Krzysztof", "Szymański", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
+        Person s10 = new Student(GeneratorAjdikow.LastPersonId(), "Małgorzata", "Woźniak", EnumTypWypozyczajacego.Student, "s"+GeneratorAjdikow.LastIndexNO());
         Service.DodajUzytkownika(s1);
         Service.DodajUzytkownika(s2);
         Service.DodajUzytkownika(s3);
@@ -110,6 +110,7 @@
         Service.ShowAllDevices();
         Service.PokazWszystkichUsers();
         Service.UsunTrwaleSprzet(p5);
+        Service.ShowAllDevices();
         Service.PokazSprzetZutylizowany();
         
 
