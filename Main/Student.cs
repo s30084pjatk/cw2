@@ -2,10 +2,10 @@
 
 public class Student : Person
 {
-    public string NrStudenta { get; set; }
-
-    public Student(string nrStudenta)
+    public Student(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTyp, string nrStudenta) : base(idPerson, imie, nazwisko, EnumTypWypozyczajacego.Student)
     {
         NrStudenta = nrStudenta;
     }
+
+    public string NrStudenta { get; set; }
 }
