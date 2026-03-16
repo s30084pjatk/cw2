@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp1;
 
-public class Person
+public abstract class Person
 {
     public string idPerson { get; set; }
     public string imie { get; set; }
