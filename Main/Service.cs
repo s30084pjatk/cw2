@@ -12,7 +12,7 @@ public class Service
     {
         Devices.Add(device);
     }
-    
+
     //USUŃ SPRZĘT I PRZENIEŚ DO ARCHIWUM. READY----------------------------------------------------------------
     public static void UsunTrwaleSprzet(Device device)
     {
@@ -23,6 +23,7 @@ public class Service
                 throw new InvalidOperationException(
                     $"Sprzęt {device}, ID: {device.Id}, {device.Nazwa} nie istnieje na liście.");
             }
+
             ZutylizowanySprzet.Add(device);
             Devices.Remove(device);
             Console.WriteLine($"Sprzęt: ID:{device.Id}, NAZWA: {device.Nazwa} został pomyślnie zarchiwizowany.");
@@ -32,7 +33,7 @@ public class Service
             Console.WriteLine(ex.Message);
         }
     }
-    
+
 // POKAZ SPRZĘT ZARCHIWIZOWANY - READY----------------------------------------------------------------
     public static void PokazSprzetZutylizowany()
     {
@@ -41,6 +42,7 @@ public class Service
             Console.WriteLine("Lista sprzętu zarchiwizowanego jest pusta");
             return;
         }
+
         foreach (Device zutylizowany in ZutylizowanySprzet)
         {
             if (zutylizowany is Laptop laptop)
@@ -53,22 +55,115 @@ public class Service
         }
     }
 
-
-
-
+    //DODAJ_USERA - READY------------------------------------------------------------------------
     public static void DodajUzytkownika(Person person)
     {
         Users.Add(person);
     }
+    //USUŃ USERA - READY------------------------------------------------------------------------
 
-    public void Wypozycz(Device device, Person person)
+    public static void UsunUsera(Person person)
     {
+        try
+        {
+            if (!Users.Contains(person))
+            {
+                throw new InvalidOperationException(
+                    $"Użytkownik {person}, ID: {person.idPerson}, IMIE: {person.imie}, NAZWISKO: {person.nazwisko}, " +
+                    $"TYP_USERA: {person.EnumTyp} -> nie istnieje na liście.");
+            }
+            Users.Remove(person);
+            Console.WriteLine($"Użytkownik {person}, ID: {person.idPerson}, IMIE: {person.imie}, NAZWISKO: {person.nazwisko}, " +
+                              $"TYP_USERA: {person.EnumTyp} -> został poprawnie usunięty.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
+    
+    //ILE AKTYWNYCH WYPOŻYCZEŃ - READY--------------------------------------------------
+    private static int PoliczAktywneWypozyczenia(Person osoba)
+    {
+        int licznik = 0;
+        foreach (Wypozyczenie wyp in Rentals)
+        {
+            if (wyp.Osoba == osoba && wyp.FaktycznaDataZwrotu == null)
+            {
+                licznik++;
+            }
+        }
+        return licznik;
+    }
+    private static bool CzySprzetWypozyczony(Device device)
+    {
+        foreach (Wypozyczenie wyp in Rentals)
+        {
+            if (wyp.Sprzet == device && wyp.FaktycznaDataZwrotu == null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    // WYPOŻYCZ SPRZĘT - READY________________________________________________________________________
+public static void Wypozycz(Device device, Person person)
+{
+    try
+    {
+        if (!Devices.Contains(device))
+        {
+            throw new InvalidOperationException($"Sprzęt {device.Nazwa} nie istnieje w systemie.");
+        }
+        if (!device.Dostepnosc)
+        {
+            throw new InvalidOperationException($"Sprzęt {device.Nazwa} jest niedostępny.");
+        }
+        if (CzySprzetWypozyczony(device))
+        {
+            throw new InvalidOperationException($"Sprzęt {device.Nazwa} jest już wypożyczony.");
+        }
+
+        //LIMITY DLA USEROW
+        int limit = 0;
+        if (person is Student)
+        {
+            limit = 2;
+        }
+        else if (person is Pracownik)
+        {
+            limit = 5;
+        }
+        int aktywneWypozyczenia = PoliczAktywneWypozyczenia(person);
+        if (aktywneWypozyczenia >= limit)
+        {
+            throw new InvalidOperationException(
+                $"Użytkownik {person.imie} {person.nazwisko} przekroczył limit wypożyczeń ({limit}). " +
+                $"Aktualnie ma {aktywneWypozyczenia} aktywnych wypożyczeń.");
+        }
+        DateTime terminZwrotu = DateTime.Now.AddDays(14);
+        Wypozyczenie wypozyczenie = new Wypozyczenie(person, device, DateTime.Now, terminZwrotu);
+        Rentals.Add(wypozyczenie);
+        device.Dostepnosc = false;
+        
+        Console.WriteLine($"Wypożyczono sprzęt: {device.Nazwa}");
+        Console.WriteLine($"Użytkownik: {person.imie} {person.nazwisko} ({person.EnumTyp})");
+        Console.WriteLine($"Termin zwrotu: {terminZwrotu:dd.MM.yyyy}");
+        Console.WriteLine($"ID wypożyczenia: {wypozyczenie.Id}");
+        Console.WriteLine($"Pozostało mu miejsc: {limit - (aktywneWypozyczenia + 1)}");
+    }
+    catch (InvalidOperationException ex)
+    {
+        Console.WriteLine($" Błąd wypożyczenia: {ex.Message}");
+    }
+}
 
     public void Zwroc(Device device)
     {
     }
-
+    
+    
+    //POKAŻ WASZYSKIE SPRZĘTY -READY ---------------------------------------------------------------------------
     public static void ShowAllDevices()
     {
         foreach (Device x in Devices)
@@ -83,12 +178,11 @@ public class Service
         }
     }
 
-    public void PokazDostepnySprzet()
-    {
-    }
+
 
     public void PokazSprzetWypozyczony()
     {
+        
     }
 
     public void PokazAktywneWypozyczenia()
@@ -103,7 +197,7 @@ public class Service
     {
     }
 
-    public static void PokazWszystkichUsers()
+    public static void PokazAktywnychUsers()
     {
         foreach (Person y in Users)
             if (y is Student strudent)

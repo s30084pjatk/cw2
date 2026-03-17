@@ -107,13 +107,16 @@
         Service.DodajSprzet(m9);
         Service.DodajSprzet(m10);
 
-        //Service.ShowAllDevices();
-        //Service.PokazWszystkichUsers();
+        /*Service.ShowAllDevices();
+        Service.PokazAktywnychUsers();
         Service.UsunTrwaleSprzet(p5);
-        //Service.ShowAllDevices();
+        Service.ShowAllDevices();
         Service.PokazSprzetZutylizowany();
         Service.UsunTrwaleSprzet(p5);
-        //Service.PokazSprzetZutylizowany();
+        Service.PokazSprzetZutylizowany();
+        Service.UsunUsera(r1);
+        Service.UsunUsera(s1);
+        Service.UsunUsera(s1);*/
         
 
         
