@@ -3,14 +3,14 @@
 public class Wypozyczenie
 {
     public int Id { get; set; }
-    public Person Osoba { get; set; }
-    public Device Sprzet { get; set; }
+    public Person_parent Osoba { get; set; }
+    public Device_parent Sprzet { get; set; }
     public DateTime DataWypozyczenia { get; set; }
     public DateTime? TerminZwrotu { get; set; }
     public int Kara { get; set; }
     public DateTime? FaktycznaDataZwrotu { get; set; }
 
-    public Wypozyczenie(Person osoba, Device sprzet, DateTime dataWypozyczenia, DateTime terminZwrotu)
+    public Wypozyczenie(Person_parent osoba, Device_parent sprzet, DateTime dataWypozyczenia, DateTime terminZwrotu)
     {
         Id = GeneratorAjdikow.LastRentalId();
         Osoba = osoba;

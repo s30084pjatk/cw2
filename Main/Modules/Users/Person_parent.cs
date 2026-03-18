@@ -1,15 +1,15 @@
 ﻿namespace ConsoleApp1;
 
-public abstract class Person
+public abstract class Person_parent
 {
-    protected Person(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTyp)
+    protected Person_parent(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTyp)
     {
         this.idPerson = idPerson;
         this.imie = imie;
         this.nazwisko = nazwisko;
         EnumTyp = enumTyp;
     }
-    
+
 
     public int idPerson { get; set; }
     public string imie { get; set; }

@@ -1,8 +1,8 @@
 ﻿namespace ConsoleApp1;
 
-public abstract class Device
+public abstract class Device_parent
 {
-    protected Device(int id, string nazwa, bool dostepnosc)
+    protected Device_parent(int id, string nazwa, bool dostepnosc)
     {
         Id = id;
         Nazwa = nazwa;

@@ -2,31 +2,32 @@
 
 public class Service
 {
-    public static List<Device> Devices = new();
-    public static List<Person> Users = new();
-    public static List<Device> ZutylizowanySprzet = new();
+    public static List<Device_parent> Devices = new();
+    public static List<Person_parent> Users = new();
+    public static List<Device_parent> ZutylizowanySprzet = new();
     public static List<Wypozyczenie> Rentals = new();
 
     //DODAJ SPRZET DO LISTY - READY----------------------------------------------------------------
-    public static void DodajSprzet(Device device)
+    public void DodajSprzet(Device_parent deviceParent)
     {
-        Devices.Add(device);
+        Devices.Add(deviceParent);
     }
 
     //USUŃ SPRZĘT I PRZENIEŚ DO ARCHIWUM. READY----------------------------------------------------------------
-    public static void UsunTrwaleSprzet(Device device)
+    public void UsunTrwaleSprzet(Device_parent deviceParent)
     {
         try
         {
-            if (!Devices.Contains(device))
+            if (!Devices.Contains(deviceParent))
             {
                 throw new InvalidOperationException(
-                    $"Sprzęt {device}, ID: {device.Id}, {device.Nazwa} nie istnieje na liście.");
+                    $"Sprzęt {deviceParent}, ID: {deviceParent.Id}, {deviceParent.Nazwa} nie istnieje na liście.");
             }
 
-            ZutylizowanySprzet.Add(device);
-            Devices.Remove(device);
-            Console.WriteLine($"Sprzęt: ID:{device.Id}, NAZWA: {device.Nazwa} został pomyślnie zarchiwizowany.");
+            ZutylizowanySprzet.Add(deviceParent);
+            Devices.Remove(deviceParent);
+            Console.WriteLine(
+                $"Sprzęt: ID:{deviceParent.Id}, NAZWA: {deviceParent.Nazwa} został pomyślnie zarchiwizowany.");
         }
         catch (InvalidOperationException ex)
         {
@@ -35,9 +36,9 @@ public class Service
     }
 
     //POKAŻ TYLKO LAPTOPS - READY----------------------------------------------------------------------
-    public static void showLaptopsOnly()
+    public void showLaptopsOnly()
     {
-        foreach (Device laptops in Devices)
+        foreach (Device_parent laptops in Devices)
         {
             if (laptops is Laptop laptop)
             {
@@ -48,9 +49,9 @@ public class Service
     }
 
     //POKAŻ TYLKO PROJEKTORY - READY----------------------------------------------------------------------
-    public static void showProjectorsOnly()
+    public void showProjectorsOnly()
     {
-        foreach (Device projectiors in Devices)
+        foreach (Device_parent projectiors in Devices)
         {
             if (projectiors is Projector projector)
             {
@@ -60,9 +61,9 @@ public class Service
         }
     }
 
-    public static void showMouseOnly()
+    public void showMouseOnly()
     {
-        foreach (Device mouses in Devices)
+        foreach (Device_parent mouses in Devices)
         {
             if (mouses is Mouse mouse)
             {
@@ -74,7 +75,7 @@ public class Service
 
 
 // POKAZ SPRZĘT ZARCHIWIZOWANY - READY----------------------------------------------------------------
-    public static void PokazSprzetZutylizowany()
+    public void PokazSprzetZutylizowany()
     {
         if (ZutylizowanySprzet.Count == 0)
         {
@@ -82,7 +83,7 @@ public class Service
             return;
         }
 
-        foreach (Device zutylizowany in ZutylizowanySprzet)
+        foreach (Device_parent zutylizowany in ZutylizowanySprzet)
         {
             if (zutylizowany is Laptop laptop)
                 Console.WriteLine($"Zutylizowany laptop: ID: {laptop.Id}, NAZWA: {laptop.Nazwa}, RAM: {laptop.RamGB}");
@@ -95,27 +96,27 @@ public class Service
     }
 
     //DODAJ_USERA - READY------------------------------------------------------------------------
-    public static void DodajUzytkownika(Person person)
+    public void DodajUzytkownika(Person_parent personParent)
     {
-        Users.Add(person);
+        Users.Add(personParent);
     }
     //USUŃ USERA - READY------------------------------------------------------------------------
 
-    public static void UsunUsera(Person person)
+    public void UsunUsera(Person_parent personParent)
     {
         try
         {
-            if (!Users.Contains(person))
+            if (!Users.Contains(personParent))
             {
                 throw new InvalidOperationException(
-                    $"Użytkownik {person}, ID: {person.idPerson}, IMIE: {person.imie}, NAZWISKO: {person.nazwisko}, " +
-                    $"TYP_USERA: {person.EnumTyp} -> nie istnieje na liście.");
+                    $"Użytkownik {personParent}, ID: {personParent.idPerson}, IMIE: {personParent.imie}, NAZWISKO: {personParent.nazwisko}, " +
+                    $"TYP_USERA: {personParent.EnumTyp} -> nie istnieje na liście.");
             }
 
-            Users.Remove(person);
+            Users.Remove(personParent);
             Console.WriteLine(
-                $"Użytkownik {person}, ID: {person.idPerson}, IMIE: {person.imie}, NAZWISKO: {person.nazwisko}, " +
-                $"TYP_USERA: {person.EnumTyp} -> został poprawnie usunięty.");
+                $"Użytkownik {personParent}, ID: {personParent.idPerson}, IMIE: {personParent.imie}, NAZWISKO: {personParent.nazwisko}, " +
+                $"TYP_USERA: {personParent.EnumTyp} -> został poprawnie usunięty.");
         }
         catch (InvalidOperationException ex)
         {
@@ -124,7 +125,7 @@ public class Service
     }
 
     //ILE AKTYWNYCH WYPOŻYCZEŃ - READY--------------------------------------------------
-    private static int PoliczAktywneWypozyczenia(Person osoba)
+    private static int PoliczAktywneWypozyczenia(Person_parent osoba)
     {
         int licznik = 0;
         foreach (Wypozyczenie wyp in Rentals)
@@ -138,11 +139,11 @@ public class Service
         return licznik;
     }
 
-    private static bool CzySprzetWypozyczony(Device device)
+    private static bool CzySprzetWypozyczony(Device_parent deviceParent)
     {
         foreach (Wypozyczenie wyp in Rentals)
         {
-            if (wyp.Sprzet == device && wyp.FaktycznaDataZwrotu == null)
+            if (wyp.Sprzet == deviceParent && wyp.FaktycznaDataZwrotu == null)
             {
                 return true;
             }
@@ -152,51 +153,51 @@ public class Service
     }
 
     // WYPOŻYCZ SPRZĘT - READY________________________________________________________________________
-    public static void Wypozycz(Device device, Person person)
+    public static void Wypozycz(Device_parent deviceParent, Person_parent personParent)
     {
         try
         {
-            if (!Devices.Contains(device))
+            if (!Devices.Contains(deviceParent))
             {
-                throw new InvalidOperationException($"Sprzęt {device.Nazwa} nie istnieje w systemie.");
+                throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} nie istnieje w systemie.");
             }
 
-            if (!device.Dostepnosc)
+            if (!deviceParent.Dostepnosc)
             {
-                throw new InvalidOperationException($"Sprzęt {device.Nazwa} jest niedostępny.");
+                throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} jest niedostępny.");
             }
 
-            if (CzySprzetWypozyczony(device))
+            if (CzySprzetWypozyczony(deviceParent))
             {
-                throw new InvalidOperationException($"Sprzęt {device.Nazwa} jest już wypożyczony.");
+                throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} jest już wypożyczony.");
             }
 
             //LIMITY DLA USEROW
             int limit = 0;
-            if (person is Student)
+            if (personParent is Student)
             {
                 limit = 2;
             }
-            else if (person is Pracownik)
+            else if (personParent is Pracownik)
             {
                 limit = 5;
             }
 
-            int aktywneWypozyczenia = PoliczAktywneWypozyczenia(person);
+            int aktywneWypozyczenia = PoliczAktywneWypozyczenia(personParent);
             if (aktywneWypozyczenia >= limit)
             {
                 throw new InvalidOperationException(
-                    $"Użytkownik {person.imie} {person.nazwisko} przekroczył limit wypożyczeń ({limit}). " +
+                    $"Użytkownik {personParent.imie} {personParent.nazwisko} przekroczył limit wypożyczeń ({limit}). " +
                     $"Aktualnie ma {aktywneWypozyczenia} aktywnych wypożyczeń.");
             }
 
             DateTime terminZwrotu = DateTime.Now.AddDays(14);
-            Wypozyczenie wypozyczenie = new Wypozyczenie(person, device, DateTime.Now, terminZwrotu);
+            Wypozyczenie wypozyczenie = new Wypozyczenie(personParent, deviceParent, DateTime.Now, terminZwrotu);
             Rentals.Add(wypozyczenie);
-            device.Dostepnosc = false;
+            deviceParent.Dostepnosc = false;
 
-            Console.WriteLine($"Wypożyczono sprzęt: {device.Nazwa}");
-            Console.WriteLine($"Użytkownik: {person.imie} {person.nazwisko} ({person.EnumTyp})");
+            Console.WriteLine($"Wypożyczono sprzęt: {deviceParent.Nazwa}");
+            Console.WriteLine($"Użytkownik: {personParent.imie} {personParent.nazwisko} ({personParent.EnumTyp})");
             Console.WriteLine($"Termin zwrotu: {terminZwrotu:dd.MM.yyyy}");
             Console.WriteLine($"ID wypożyczenia: {wypozyczenie.Id}");
             Console.WriteLine($"Pozostało mu miejsc: {limit - (aktywneWypozyczenia + 1)}");
@@ -208,19 +209,19 @@ public class Service
     }
 
     // ZWROT SPRZĘTU - READY_____________________________________________________________
-    public static void Zwroc(Device device)
+    public static void Zwroc(Device_parent deviceParent)
     {
         try
         {
-            if (!Devices.Contains(device))
+            if (!Devices.Contains(deviceParent))
             {
-                throw new InvalidOperationException($"Sprzęt {device.Nazwa} nie istnieje w systemie.");
+                throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} nie istnieje w systemie.");
             }
 
             Wypozyczenie aktywneWypozyczenie = null;
             foreach (Wypozyczenie w in Rentals)
             {
-                if (w.Sprzet == device && w.FaktycznaDataZwrotu == null)
+                if (w.Sprzet == deviceParent && w.FaktycznaDataZwrotu == null)
                 {
                     aktywneWypozyczenie = w;
                     break;
@@ -229,7 +230,7 @@ public class Service
 
             if (aktywneWypozyczenie == null)
             {
-                throw new InvalidOperationException($"Brak aktywnego wypożyczenia dla sprzętu {device.Nazwa}");
+                throw new InvalidOperationException($"Brak aktywnego wypożyczenia dla sprzętu {deviceParent.Nazwa}");
             }
 
             //USTAWIANIE TERMINU ZWROTU
@@ -244,10 +245,10 @@ public class Service
             }
 
             //RETURN DOSTEPNOŚCI
-            device.Dostepnosc = true;
+            deviceParent.Dostepnosc = true;
 
             //RE5PECTA
-            Console.WriteLine($"Zwrócono sprzęt: {device.Nazwa}");
+            Console.WriteLine($"Zwrócono sprzęt: {deviceParent.Nazwa}");
             Console.WriteLine($"Użytkownik: {aktywneWypozyczenie.Osoba.imie} {aktywneWypozyczenie.Osoba.nazwisko}");
             Console.WriteLine($"Data wypożyczenia: {aktywneWypozyczenie.DataWypozyczenia:dd.MM.yyyy}");
             Console.WriteLine($"Termin zwrotu: {aktywneWypozyczenie.TerminZwrotu:dd.MM.yyyy}");
@@ -263,11 +264,11 @@ public class Service
         }
     }
 
-    private static Wypozyczenie ZnajdzAktywneWypozyczenie(Device device)
+    private static Wypozyczenie ZnajdzAktywneWypozyczenie(Device_parent deviceParent)
     {
         foreach (Wypozyczenie wyp in Rentals)
         {
-            if (wyp.Sprzet == device && wyp.FaktycznaDataZwrotu == null)
+            if (wyp.Sprzet == deviceParent && wyp.FaktycznaDataZwrotu == null)
             {
                 return wyp;
             }
@@ -278,9 +279,9 @@ public class Service
 
 
     //POKAŻ WASZYSKIE SPRZĘTY -READY ---------------------------------------------------------------------------
-    public static void ShowAllDevices()
+    public void ShowAllDevices()
     {
-        foreach (Device dev in Devices)
+        foreach (Device_parent dev in Devices)
         {
             if (dev is Laptop laptop)
                 Console.WriteLine($"Laptop: ID: {laptop.Id}, NAZWA: {laptop.Nazwa}, RAM: {laptop.RamGB}");
@@ -309,13 +310,13 @@ public class Service
     {
     }
 
-    public static void PokazAktywnychUsers()
+    public void PokazAktywnychUsers()
     {
-        foreach (Person y in Users)
-            if (y is Student strudent)
+        foreach (Person_parent person in Users)
+            if (person is Student strudent)
                 Console.WriteLine(
                     $"Student: ID_USER: {strudent.idPerson}, NR_INDEXU: {strudent.NrStudenta}, IMIE: {strudent.imie}, NAZWISKO: {strudent.nazwisko}");
-            else if (y is Pracownik pracownik)
+            else if (person is Pracownik pracownik)
                 Console.WriteLine($"Pracownik: ID_USER: {pracownik.idPerson}, IMIE: {pracownik.imie}, " +
                                   $"NAZWISKO: {pracownik.nazwisko} " +
                                   $"POZIOM_DOSTĘPU: {pracownik.PoziomDostepu}");
