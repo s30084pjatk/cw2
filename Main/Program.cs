@@ -219,6 +219,5 @@ Console.WriteLine("\n-- Zwrot drugiego sprzętu, który przed chwilą został wy
 service.Zwroc(p4, 2);
 Console.WriteLine("\n-- Podsumowanie aktywnych wypożyczęń przez usera r10");
 service.PokazAktywneWypozyczeniaUzytkownika(r10);
-
-
-//brakuje raportu,  + jakaś dokumentacyjka
+Console.WriteLine("\n-- Generowanie raportu.");
+service.Raportuj();

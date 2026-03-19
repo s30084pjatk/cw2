@@ -397,4 +397,43 @@ public class Service
                                   $"NAZWISKO: {pracownik.nazwisko} " +
                                   $"POZIOM_DOSTĘPU: {pracownik.PoziomDostepu}");
     }
+
+    public void Raportuj()
+    {
+        int wyp = 0;
+        int dost = 0;
+        foreach (Device_parent device in Devices)
+        {
+            if (CzySprzetWypozyczony(device)) wyp++;
+            else if (device.Dostepnosc) dost++;
+        }
+
+        int student = 0;
+        int pracownik = 0;
+        foreach (Person_parent person in Users)
+        {
+            if (person is Student) student++;
+            else if (person is Pracownik) pracownik++;
+        }
+
+        int aktyw = 0;
+        int po_terminie = 0;
+        ;
+        int kara = 0;
+        foreach (Wypozyczenie w in Rentals)
+        {
+            if (w.Czy_Aktywne())
+            {
+                aktyw++;
+                if (w.CzyOpoznione()) po_terminie++;
+            }
+
+            kara += w.Kara;
+        }
+
+        Console.WriteLine(
+            $"Sprzęt: {Devices.Count} (dostępne: {dost}, wypożyczone: {wyp}, zutylizowane: {ZutylizowanySprzet.Count})" +
+            $"\nUżytkownicy.: {Users.Count} (Studentów jest: {student}, Pracowników jest: {pracownik}) " +
+            $"\nWypożyczenia.: {Rentals.Count} (aktywne: {aktyw}, przeterminowane: {po_terminie}, kary: {kara}zł)");
+    }
 }
