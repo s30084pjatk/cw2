@@ -205,5 +205,20 @@ service.Wypozycz(p7, r10);
 Console.WriteLine("\n-- Próba dwukrotnego wypożyczenia tego samego sprzętu - niepowodzenie.");
 service.Wypozycz(p4, r10);
 service.Wypozycz(p4, s7);
+Console.WriteLine("\n-- Pokazanie aktywnych wypożyczeń dla użytkownika r10");
+service.PokazAktywneWypozyczeniaUzytkownika(r10);
+Console.WriteLine("\n-- Dodatkowe wypożyczenie uzytkownika r10");
+service.Wypozycz(p9, r10);
+Console.WriteLine("\n-- Pokazanie listy aktywnych wypożyczeń dla usera r10 - powinno być dwa");
+service.PokazAktywneWypozyczeniaUzytkownika(r10);
+Console.WriteLine("\n-- Zwrot sprzętu, który przed chwilą został wypożyczony dla usera r10");
+service.Zwroc(p9, 17);
+Console.WriteLine("\n-- Ponowne pokazanie listy aktywnych wypożyczeń dla usera r10 - powinno być już jedno");
+service.PokazAktywneWypozyczeniaUzytkownika(r10);
+Console.WriteLine("\n-- Zwrot drugiego sprzętu, który przed chwilą został wypożyczony dla usera r10");
+service.Zwroc(p4, 2);
+Console.WriteLine("\n-- Podsumowanie aktywnych wypożyczęń przez usera r10");
+service.PokazAktywneWypozyczeniaUzytkownika(r10);
 
-//brakuje raportu, lista aktywnych wypożyczeń + jakaś dokumentacyjka
+
+//brakuje raportu,  + jakaś dokumentacyjka

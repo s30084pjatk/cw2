@@ -338,7 +338,38 @@ public class Service
 
         return null;
     }
+    //POKAŻAKTYWNE WYPOŻYCZENIA SPRZĘTU -READY ---------------------------------------------------------------------------
 
+    public void PokazAktywneWypozyczeniaUzytkownika(Person_parent osoba)
+    {
+        var aktywne = new List<Wypozyczenie>();
+
+        foreach (Wypozyczenie wyp in Rentals)
+        {
+            if (wyp.Osoba == osoba && wyp.FaktycznaDataZwrotu == null)
+            {
+                aktywne.Add(wyp);
+            }
+        }
+
+        if (aktywne.Count == 0)
+        {
+            Console.WriteLine(
+                $"IMIE: {osoba.imie}, NAZWISKO: {osoba.nazwisko}: {osoba.EnumTyp} - brak aktywnych wypożyczeń");
+            return;
+        }
+
+        Console.WriteLine($"\nAKTYWNE WYPOŻYCZENIA: {osoba.imie} {osoba.nazwisko}");
+        foreach (Wypozyczenie wyp in aktywne)
+        {
+            //tak sobie działa ten termin zwrotu.
+            //do onowniego sprawdzenia
+            string status = wyp.CzyOpoznione() ? "OPÓŹNIONE" : "W TERMINIE";
+            Console.WriteLine($"@ {status} @ {wyp.Sprzet.Nazwa} - zwrot: {wyp.TerminZwrotu:dd.MM.yyyy}");
+        }
+
+        Console.WriteLine($"Razem: {aktywne.Count} wypożyczeń");
+    }
 
     //POKAŻ WASZYSKIE SPRZĘTY -READY ---------------------------------------------------------------------------
     public void ShowAllDevices()
