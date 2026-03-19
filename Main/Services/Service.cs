@@ -24,6 +24,12 @@ public class Service
                     $"Sprzęt {deviceParent}, ID: {deviceParent.Id}, {deviceParent.Nazwa} nie istnieje na liście.");
             }
 
+            if (CzySprzetWypozyczony(deviceParent))
+            {
+                throw new InvalidOperationException(
+                    $"Nie można usunąć sprzętu {deviceParent.Nazwa}, ponieważ jest aktualnie wypożyczony!");
+            }
+
             ZutylizowanySprzet.Add(deviceParent);
             Devices.Remove(deviceParent);
             Console.WriteLine(
@@ -61,7 +67,7 @@ public class Service
         }
     }
 
-    public void showMouseOnly()
+    public void showMouseOnly() //- READY----------------------------------------------------------------------
     {
         foreach (Device_parent mouses in Devices)
         {
@@ -130,7 +136,7 @@ public class Service
         int licznik = 0;
         foreach (Wypozyczenie wyp in Rentals)
         {
-            if (wyp.Osoba == osoba && wyp.FaktycznaDataZwrotu == null)
+            if (wyp.Osoba == osoba)
             {
                 licznik++;
             }
@@ -139,7 +145,9 @@ public class Service
         return licznik;
     }
 
-    private static bool CzySprzetWypozyczony(Device_parent deviceParent)
+    private static bool
+        CzySprzetWypozyczony(
+            Device_parent deviceParent) //- READY----------------------------------------------------------------------
     {
         foreach (Wypozyczenie wyp in Rentals)
         {
@@ -152,11 +160,33 @@ public class Service
         return false;
     }
 
+    public void PokazDostepnySprzet() //- READY----------------------------------------------------------------------
+    {
+        foreach (Device_parent dev in Devices)
+        {
+            if (dev.Dostepnosc && !CzySprzetWypozyczony(dev))
+            {
+                if (dev is Laptop laptop)
+                    Console.WriteLine($"Laptop: ID: {laptop.Id}, NAZWA: {laptop.Nazwa}");
+                else if (dev is Projector projector)
+                    Console.WriteLine($"Projektor: ID: {projector.Id}, NAZWA: {projector.Nazwa}");
+                else if (dev is Mouse mouse)
+                    Console.WriteLine($"Mysz: ID: {mouse.Id}, NAZWA: {mouse.Nazwa}");
+            }
+        }
+    }
+
     // WYPOŻYCZ SPRZĘT - READY________________________________________________________________________
-    public static void Wypozycz(Device_parent deviceParent, Person_parent personParent)
+    public void Wypozycz(Device_parent deviceParent, Person_parent personParent)
     {
         try
         {
+            if (!Users.Contains(personParent))
+            {
+                throw new InvalidOperationException(
+                    $"Użytkownik {personParent.imie} {personParent.nazwisko} nie istnieje w systemie.");
+            }
+
             if (!Devices.Contains(deviceParent))
             {
                 throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} nie istnieje w systemie.");
@@ -172,7 +202,6 @@ public class Service
                 throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} jest już wypożyczony.");
             }
 
-            //LIMITY DLA USEROW
             int limit = 0;
             if (personParent is Student)
             {
@@ -187,7 +216,7 @@ public class Service
             if (aktywneWypozyczenia >= limit)
             {
                 throw new InvalidOperationException(
-                    $"Użytkownik {personParent.imie} {personParent.nazwisko} przekroczył limit wypożyczeń ({limit}). " +
+                    $"Użytkownik {personParent.EnumTyp} {personParent.imie} {personParent.nazwisko} przekroczył limit wypożyczeń ({limit}). " +
                     $"Aktualnie ma {aktywneWypozyczenia} aktywnych wypożyczeń.");
             }
 
@@ -195,66 +224,97 @@ public class Service
             Wypozyczenie wypozyczenie = new Wypozyczenie(personParent, deviceParent, DateTime.Now, terminZwrotu);
             Rentals.Add(wypozyczenie);
             deviceParent.Dostepnosc = false;
+            if (deviceParent is Laptop laptop)
+            {
+                Console.WriteLine($"Wypożyczono sprzęt: laptop {laptop.Nazwa}");
+            }
+            else if (deviceParent is Projector projector)
+            {
+                Console.WriteLine($"Wypożyczono sprzęt: projektor {projector.Nazwa}");
+            }
+            else if (deviceParent is Mouse mouse)
+            {
+                Console.WriteLine($"Wypożyczono sprzęt: mysz {mouse.Nazwa}");
+            }
 
-            Console.WriteLine($"Wypożyczono sprzęt: {deviceParent.Nazwa}");
             Console.WriteLine($"Użytkownik: {personParent.imie} {personParent.nazwisko} ({personParent.EnumTyp})");
             Console.WriteLine($"Termin zwrotu: {terminZwrotu:dd.MM.yyyy}");
             Console.WriteLine($"ID wypożyczenia: {wypozyczenie.Id}");
-            Console.WriteLine($"Pozostało mu miejsc: {limit - (aktywneWypozyczenia + 1)}");
+            if (limit - (aktywneWypozyczenia + 1) > 0)
+            {
+                Console.WriteLine($"{personParent.EnumTyp} może wypożyczyć jeszcze " +
+                                  $"{limit - (aktywneWypozyczenia + 1)} sprzęt/sprzęty.");
+            }
+            else if (limit - (aktywneWypozyczenia + 1) == 0)
+            {
+                Console.WriteLine($"Limit wypożyczeń ({limit}) przez {personParent.EnumTyp} został wykorzystany. " +
+                                  $"Brak możliwości realizacji kolejnego wypożyczenia.");
+            }
         }
         catch (InvalidOperationException ex)
         {
-            Console.WriteLine($" Błąd wypożyczenia: {ex.Message}");
+            Console.WriteLine($"Błąd wypożyczenia: {ex.Message}");
         }
     }
 
+
     // ZWROT SPRZĘTU - READY_____________________________________________________________
-    public static void Zwroc(Device_parent deviceParent)
+    public void Zwroc(Device_parent deviceParent, int RentalDaysDuration)
     {
         try
         {
             if (!Devices.Contains(deviceParent))
             {
-                throw new InvalidOperationException($"Sprzęt {deviceParent.Nazwa} nie istnieje w systemie.");
+                throw new InvalidOperationException(
+                    $"Sprzęt ID: {deviceParent.Id}, NAZWA {deviceParent.Nazwa} nie istnieje w systemie.");
             }
 
-            Wypozyczenie aktywneWypozyczenie = null;
-            foreach (Wypozyczenie w in Rentals)
-            {
-                if (w.Sprzet == deviceParent && w.FaktycznaDataZwrotu == null)
-                {
-                    aktywneWypozyczenie = w;
-                    break;
-                }
-            }
-
+            Wypozyczenie aktywneWypozyczenie = ZnajdzAktywneWypozyczenieSprzetu(deviceParent);
             if (aktywneWypozyczenie == null)
             {
-                throw new InvalidOperationException($"Brak aktywnego wypożyczenia dla sprzętu {deviceParent.Nazwa}");
+                throw new InvalidOperationException(
+                    $"Brak aktywnego wypożyczenia dla sprzętu ID: {deviceParent.Id}, NAZWA {deviceParent.Nazwa}");
             }
 
-            //USTAWIANIE TERMINU ZWROTU
             aktywneWypozyczenie.FaktycznaDataZwrotu = DateTime.Now;
+            deviceParent.Dostepnosc = true;
+            DateTime dataWypozyczenia = aktywneWypozyczenie.DataWypozyczenia;
+            DateTime terminZwrotu = aktywneWypozyczenie.TerminZwrotu.Value;
+            DateTime symulowanaDataZwrotu = dataWypozyczenia.AddDays(RentalDaysDuration);
 
-            if (DateTime.Now > aktywneWypozyczenie.TerminZwrotu)
+            int kara = 0;
+            int dniOpoznienia = 0;
+            if (symulowanaDataZwrotu > terminZwrotu)
             {
-                int dniOpoznienia = (DateTime.Now - aktywneWypozyczenie.TerminZwrotu.Value).Days;
-                aktywneWypozyczenie.Kara = dniOpoznienia * 10;
-                Console.WriteLine($"UWAGA: Zwrot opóźniony o {dniOpoznienia} dni!");
-                Console.WriteLine($"Naliczono karę: {aktywneWypozyczenie.Kara} + zł");
+                dniOpoznienia = (symulowanaDataZwrotu - terminZwrotu).Days;
+                kara = dniOpoznienia * 10; // 10 zł za dzień opóźnienia
+                aktywneWypozyczenie.Kara = kara;
+            }
+            else
+            {
+                aktywneWypozyczenie.Kara = 0;
             }
 
-            //RETURN DOSTEPNOŚCI
-            deviceParent.Dostepnosc = true;
+            if (deviceParent is Laptop laptop)
+            {
+                Console.WriteLine($"Zwrócono sprzęt: laptop {laptop.Nazwa}");
+            }
+            else if (deviceParent is Projector projector)
+            {
+                Console.WriteLine($"Zwrócono sprzęt: projektor {projector.Nazwa}");
+            }
+            else if (deviceParent is Mouse mouse)
+            {
+                Console.WriteLine($"Zwrócono sprzęt: mysz {mouse.Nazwa}");
+            }
 
-            //RE5PECTA
-            Console.WriteLine($"Zwrócono sprzęt: {deviceParent.Nazwa}");
             Console.WriteLine($"Użytkownik: {aktywneWypozyczenie.Osoba.imie} {aktywneWypozyczenie.Osoba.nazwisko}");
-            Console.WriteLine($"Data wypożyczenia: {aktywneWypozyczenie.DataWypozyczenia:dd.MM.yyyy}");
-            Console.WriteLine($"Termin zwrotu: {aktywneWypozyczenie.TerminZwrotu:dd.MM.yyyy}");
-            Console.WriteLine($"Data zwrotu: {aktywneWypozyczenie.FaktycznaDataZwrotu:dd.MM.yyyy}");
-            if (aktywneWypozyczenie.Kara > 0)
-                Console.WriteLine($"Kara: {aktywneWypozyczenie.Kara} zł");
+            Console.WriteLine($"Data wypożyczenia: {dataWypozyczenia:dd.MM.yyyy}");
+            Console.WriteLine($"Wstępny termin zwrotu: {terminZwrotu:dd.MM.yyyy}");
+            Console.WriteLine(
+                $"Symulowana data zwrotu: {symulowanaDataZwrotu:dd.MM.yyyy} (po {RentalDaysDuration} dniach)");
+            if (kara > 0)
+                Console.WriteLine($"Kara: {kara} zł (opóźnienie {dniOpoznienia} dni)");
             else
                 Console.WriteLine($"Zwrot w terminie - brak kary");
         }
@@ -264,7 +324,9 @@ public class Service
         }
     }
 
-    private static Wypozyczenie ZnajdzAktywneWypozyczenie(Device_parent deviceParent)
+    private Wypozyczenie
+        ZnajdzAktywneWypozyczenieSprzetu(
+            Device_parent deviceParent) //- READY----------------------------------------------------------------------
     {
         foreach (Wypozyczenie wyp in Rentals)
         {
@@ -291,23 +353,6 @@ public class Service
                 Console.WriteLine(
                     $"Projektor: ID: {projector.Id}, NAZWA: {projector.Nazwa}, {projector.Jasnosc} lumenów");
         }
-    }
-
-
-    public void PokazSprzetWypozyczony()
-    {
-    }
-
-    public void PokazAktywneWypozyczenia()
-    {
-    }
-
-    public void PokazPrzeterminowaneWypozyczenia()
-    {
-    }
-
-    public void GenerujRaport()
-    {
     }
 
     public void PokazAktywnychUsers()

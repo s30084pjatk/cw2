@@ -34,13 +34,13 @@ public class Wypozyczenie
     public int DniOpoznienia()
     {
         if (!CzyOpoznione()) return 0;
-
-        DateTime dataReferencyjna = FaktycznaDataZwrotu ?? DateTime.Now;
-        return (dataReferencyjna - TerminZwrotu.Value).Days;
+        if (FaktycznaDataZwrotu.HasValue)
+            return (FaktycznaDataZwrotu.Value - TerminZwrotu.Value).Days;
+        return (DateTime.Now - TerminZwrotu.Value).Days;
     }
 
     public int ObliczKare()
     {
-        return DniOpoznienia() * 5;
+        return DniOpoznienia() * 10;
     }
 }
