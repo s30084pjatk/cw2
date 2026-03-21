@@ -220,7 +220,7 @@ public class Service
                     $"Aktualnie ma {aktywneWypozyczenia} aktywnych wypożyczeń.");
             }
 
-            DateTime terminZwrotu = DateTime.Now.AddDays(14);
+            DateTime terminZwrotu = DateTime.Now.AddDays(Wypozyczenie.RentalDurationDefaultTime);
             Wypozyczenie wypozyczenie = new Wypozyczenie(personParent, deviceParent, DateTime.Now, terminZwrotu);
             Rentals.Add(wypozyczenie);
             deviceParent.Dostepnosc = false;
@@ -287,7 +287,7 @@ public class Service
             if (symulowanaDataZwrotu > terminZwrotu)
             {
                 dniOpoznienia = (symulowanaDataZwrotu - terminZwrotu).Days;
-                kara = dniOpoznienia * 10; // 10 zł za dzień opóźnienia
+                kara = dniOpoznienia * Wypozyczenie.KaraDefaultValue;
                 aktywneWypozyczenie.Kara = kara;
             }
             else

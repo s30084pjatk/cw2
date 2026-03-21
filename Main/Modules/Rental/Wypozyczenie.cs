@@ -2,6 +2,8 @@
 
 public class Wypozyczenie
 {
+    public static int RentalDurationDefaultTime = 14;
+    public static int KaraDefaultValue = 10;
     public int Id { get; set; }
     public Person_parent Osoba { get; set; }
     public Device_parent Sprzet { get; set; }
@@ -29,18 +31,5 @@ public class Wypozyczenie
     public bool CzyOpoznione()
     {
         return Czy_Aktywne() && DateTime.Now > TerminZwrotu;
-    }
-
-    public int DniOpoznienia()
-    {
-        if (!CzyOpoznione()) return 0;
-        if (FaktycznaDataZwrotu.HasValue)
-            return (FaktycznaDataZwrotu.Value - TerminZwrotu.Value).Days;
-        return (DateTime.Now - TerminZwrotu.Value).Days;
-    }
-
-    public int ObliczKare()
-    {
-        return DniOpoznienia() * 10;
     }
 }
