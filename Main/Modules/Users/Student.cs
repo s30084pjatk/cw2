@@ -2,7 +2,8 @@
 
 public class Student : Person_parent
 {
-    public Student(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTyp, string nrStudenta) :
+    public Student(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTypWypozyczajacego,
+        string nrStudenta) :
         base(idPerson, imie, nazwisko, EnumTypWypozyczajacego.Student)
     {
         NrStudenta = nrStudenta;
