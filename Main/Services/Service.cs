@@ -2,9 +2,9 @@
 
 public class Service
 {
-    public static List<Device_parent> Devices = new();
-    public static List<Person_parent> Users = new();
-    public static List<Device_parent> ZutylizowanySprzet = new();
+    private static List<Device_parent> Devices = new();
+    private static List<Person_parent> Users = new();
+    private static List<Device_parent> ZutylizowanySprzet = new();
     public static List<Wypozyczenie> Rentals = new();
 
     //DODAJ SPRZET DO LISTY - READY----------------------------------------------------------------
@@ -312,7 +312,7 @@ public class Service
             Console.WriteLine($"Data wypożyczenia: {dataWypozyczenia:dd.MM.yyyy}");
             Console.WriteLine($"Wstępny termin zwrotu: {terminZwrotu:dd.MM.yyyy}");
             Console.WriteLine(
-                $"Symulowana data zwrotu: {symulowanaDataZwrotu:dd.MM.yyyy} (po {RentalDaysDuration} dniach)");
+                $"Data zwrotu: {symulowanaDataZwrotu:dd.MM.yyyy} (po {RentalDaysDuration} dniach)");
             if (kara > 0)
                 Console.WriteLine($"Kara: {kara} zł (opóźnienie {dniOpoznienia} dni)");
             else

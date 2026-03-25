@@ -4,7 +4,7 @@ public abstract class Person_parent
 {
     protected Person_parent(int idPerson, string imie, string nazwisko, EnumTypWypozyczajacego enumTyp)
     {
-        this.idPerson = idPerson;
+        this.idPerson = GeneratorAjdikow.LastPersonId();
         this.imie = imie;
         this.nazwisko = nazwisko;
         EnumTyp = enumTyp;
