@@ -6,6 +6,7 @@ public class Student : Person_parent
         base(idPerson, imie, nazwisko, EnumTypWypozyczajacego.Student)
     {
         NrStudenta = nrStudenta;
+        Service.Users.Add(this);
     }
 
     public string NrStudenta { get; set; }

@@ -4,7 +4,7 @@ public abstract class Device_parent
 {
     protected Device_parent(int id, string nazwa, bool dostepnosc)
     {
-        Id = GeneratorAjdikow.LastDeviceId();
+        Id = id;
         Nazwa = nazwa;
         Dostepnosc = dostepnosc;
     }

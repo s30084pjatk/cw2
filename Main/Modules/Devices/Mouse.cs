@@ -6,6 +6,7 @@ public class Mouse : Device_parent
     {
         Bezprzewodowa = bezprzewodowa;
         DPI = dpi;
+        Service.Devices.Add(this);
     }
 
     public bool Bezprzewodowa { get; set; }

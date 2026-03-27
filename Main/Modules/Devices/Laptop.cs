@@ -6,6 +6,7 @@ public class Laptop : Device_parent
     {
         RamGB = ramGb;
         CPU = cpu;
+        Service.Devices.Add(this);
     }
 
     public int RamGB { get; set; }

@@ -6,6 +6,7 @@ public class Pracownik : Person_parent
         idPerson, imie, nazwisko, EnumTypWypozyczajacego.Pracownik)
     {
         PoziomDostepu = poziomDostepu;
+        Service.Users.Add(this);
     }
 
     public EnumPracownikPoziomDostepu PoziomDostepu { get; set; }

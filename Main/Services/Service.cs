@@ -2,8 +2,8 @@
 
 public class Service
 {
-    private static List<Device_parent> Devices = new();
-    private static List<Person_parent> Users = new();
+    public static List<Device_parent> Devices = new();
+    public static List<Person_parent> Users = new();
     private static List<Device_parent> ZutylizowanySprzet = new();
     public static List<Wypozyczenie> Rentals = new();
 

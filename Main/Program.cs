@@ -22,16 +22,6 @@ Person_parent r9 = new Pracownik(GeneratorAjdikow.LastPersonId(), "Paweł", "Faj
     EnumPracownikPoziomDostepu.Poziom_Zielony);
 Person_parent r10 = new Pracownik(GeneratorAjdikow.LastPersonId(), "Wojciech", "Nowicki",
     EnumPracownikPoziomDostepu.Poziom_Czerwony);
-service.DodajUzytkownika(r1);
-service.DodajUzytkownika(r2);
-service.DodajUzytkownika(r3);
-service.DodajUzytkownika(r4);
-service.DodajUzytkownika(r5);
-service.DodajUzytkownika(r6);
-service.DodajUzytkownika(r7);
-service.DodajUzytkownika(r8);
-service.DodajUzytkownika(r9);
-service.DodajUzytkownika(r10);
 
 Person_parent s1 = new Student(GeneratorAjdikow.LastPersonId(), "Jan", "Kowalski", EnumTypWypozyczajacego.Student,
     "s" + GeneratorAjdikow.LastIndexNO());
@@ -56,16 +46,6 @@ Person_parent s9 = new Student(GeneratorAjdikow.LastPersonId(), "Krzysztof", "Sz
 Person_parent s10 = new Student(GeneratorAjdikow.LastPersonId(), "Małgorzata", "Woźniak",
     EnumTypWypozyczajacego.Student,
     "s" + GeneratorAjdikow.LastIndexNO());
-service.DodajUzytkownika(s1);
-service.DodajUzytkownika(s2);
-service.DodajUzytkownika(s3);
-service.DodajUzytkownika(s4);
-service.DodajUzytkownika(s5);
-service.DodajUzytkownika(s6);
-service.DodajUzytkownika(s7);
-service.DodajUzytkownika(s8);
-service.DodajUzytkownika(s9);
-service.DodajUzytkownika(s10);
 
 Device_parent l1 = new Laptop(GeneratorAjdikow.LastDeviceId(), "Dell XPS 15", true, 32, "Intel i7");
 Device_parent l2 = new Laptop(GeneratorAjdikow.LastDeviceId(), "MacBook Pro 14", true, 16, "Apple M2");
@@ -77,16 +57,6 @@ Device_parent l7 = new Laptop(GeneratorAjdikow.LastDeviceId(), "Microsoft Surfac
 Device_parent l8 = new Laptop(GeneratorAjdikow.LastDeviceId(), "Razer Blade 15", true, 32, "Intel i9");
 Device_parent l9 = new Laptop(GeneratorAjdikow.LastDeviceId(), "MSI Gaming", true, 64, "Intel i9");
 Device_parent l10 = new Laptop(GeneratorAjdikow.LastDeviceId(), "LG Gram", true, 16, "Intel i7");
-service.DodajSprzet(l1);
-service.DodajSprzet(l2);
-service.DodajSprzet(l3);
-service.DodajSprzet(l4);
-service.DodajSprzet(l5);
-service.DodajSprzet(l6);
-service.DodajSprzet(l7);
-service.DodajSprzet(l8);
-service.DodajSprzet(l9);
-service.DodajSprzet(l10);
 
 Device_parent p1 = new Projector(GeneratorAjdikow.LastDeviceId(), "Epson EB-695Wi", true, 3500, "1920x1080");
 Device_parent p2 = new Projector(GeneratorAjdikow.LastDeviceId(), "BenQ TH585", true, 3200, "1920x1080");
@@ -98,16 +68,7 @@ Device_parent p7 = new Projector(GeneratorAjdikow.LastDeviceId(), "NEC NP-P452H"
 Device_parent p8 = new Projector(GeneratorAjdikow.LastDeviceId(), "Acer H6815", true, 3200, "1920x1080");
 Device_parent p9 = new Projector(GeneratorAjdikow.LastDeviceId(), "LG PF50KA", true, 600, "1920x1080");
 Device_parent p10 = new Projector(GeneratorAjdikow.LastDeviceId(), "Samsung The Freestyle", true, 550, "1920x1080");
-service.DodajSprzet(p1);
-service.DodajSprzet(p2);
-service.DodajSprzet(p3);
-service.DodajSprzet(p4);
-service.DodajSprzet(p5);
-service.DodajSprzet(p6);
-service.DodajSprzet(p7);
-service.DodajSprzet(p8);
-service.DodajSprzet(p9);
-service.DodajSprzet(p10);
+
 
 Device_parent m1 = new Mouse(GeneratorAjdikow.LastDeviceId(), "Logitech MX Master 3", true, true, 4000);
 Device_parent m2 = new Mouse(GeneratorAjdikow.LastDeviceId(), "Razer DeathAdder V2", true, false, 16000);
@@ -119,16 +80,6 @@ Device_parent m7 = new Mouse(GeneratorAjdikow.LastDeviceId(), "Apple Magic Mouse
 Device_parent m8 = new Mouse(GeneratorAjdikow.LastDeviceId(), "Genius XScroll", true, true, 800);
 Device_parent m9 = new Mouse(GeneratorAjdikow.LastDeviceId(), "Trust GXT 155", true, false, 2400);
 Device_parent m10 = new Mouse(GeneratorAjdikow.LastDeviceId(), "ASUS ROG Gladius III", true, false, 19000);
-service.DodajSprzet(m1);
-service.DodajSprzet(m2);
-service.DodajSprzet(m3);
-service.DodajSprzet(m4);
-service.DodajSprzet(m5);
-service.DodajSprzet(m6);
-service.DodajSprzet(m7);
-service.DodajSprzet(m8);
-service.DodajSprzet(m9);
-service.DodajSprzet(m10);
 
 
 Console.WriteLine("\n-- Pokaż wszyskich aktywne urządzenia");
