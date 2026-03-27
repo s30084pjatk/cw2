@@ -7,6 +7,7 @@ public class Projector : Device_parent
     {
         Jasnosc = jasnosc;
         Rozdzielczosc = rozdzielczosc;
+        Service.Devices.Add(this);
     }
 
     public int Jasnosc { get; set; }
